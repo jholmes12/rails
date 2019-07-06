@@ -158,7 +158,11 @@ module ActiveRecord
             configs
           else
             configs.map do |config|
-              ActiveRecord::DatabaseConfigurations::UrlConfig.new(config.env_name, config.spec_name, url, config.config)
+              unless config.url_config?
+                ActiveRecord::DatabaseConfigurations::UrlConfig.new(config.env_name, config.spec_name, url, config.config)
+              else
+                config
+              end
             end
           end
         else
